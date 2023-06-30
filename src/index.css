@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* styles.css */
+
+/* styles.css */
+
+.myElement {
+  box-shadow: -4px 29px 12px -8px rgba(0, 0, 0, 0.2);
+  border-radius: 17px;
+}
+
+.height{
+  height: 30rem;
+}
+
+.border{
+  border-radius: 10px;
+}
+
+.search-btn{
+  top: 128px;
+  right: 10rem;
+}
+
+.smSize{
+  font-size: .840rem;
+  font-weight: 600;
+}
+
+.trash-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.trash-icon {
+  color: #ff3b30; /* Set the iOS red color or a similar shade of red */
+}
+
+.item-height{
+  height: 86.2px;
+}
