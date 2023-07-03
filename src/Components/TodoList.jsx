@@ -3,8 +3,7 @@ import TodoItem from "./TodoItem";
 import Header from "./Header";
 import DateTimePicker from "./DateTimePicker";
 import Todotask from "./Todotask";
-
-
+import { v4 as uuidv4 } from "uuid";
 
 function getTodoListFromLocalStorage() {
   const storedList = localStorage.getItem("todoList");
@@ -15,15 +14,13 @@ function getTodoListFromLocalStorage() {
   }
 }
 
-
 function TodoList() {
   const [list, setList] = useState(getTodoListFromLocalStorage());
   const [todo, setTodo] = useState("");
   const [submitClicked, setSubmitClicked] = useState(false);
   const [selectedTime, setSelectedTime] = useState(null);
   const [filterClick, setFilterClick] = useState(false);
-  const [filter, setFilter] = useState("");
-  
+  const [filterSearch, setFilterSearch] = useState("");
 
   useEffect(() => {
     const storedList = localStorage.getItem("todoList");
@@ -35,14 +32,6 @@ function TodoList() {
   useEffect(() => {
     localStorage.setItem("todoList", JSON.stringify(list));
   }, [list]);
-
-  const onHandleFilter = (e) => {
-    setFilterClick(!filterClick);
-
-    if (filterClick === true) {
-      setFilter("");
-    }
-  };
 
   const addTask = (e) => {
     e.preventDefault();
@@ -81,6 +70,7 @@ function TodoList() {
       }
 
       let newTask = {
+        id: uuidv4(),
         task: todo,
         completed: false,
         time: formattedTime,
@@ -91,78 +81,59 @@ function TodoList() {
       setList(newList);
       setTodo("");
       setSelectedTime(null);
-  
+
       // Update localStorage
       localStorage.setItem("todoList", JSON.stringify(newList));
     } else {
       setSubmitClicked(true);
     }
-  
+
     setTimeout(() => {
       setSubmitClicked(false);
     }, 1500);
   };
 
-  const itemCompleted = (index) => {
-    const filteredIndex = list.findIndex(
-      (item) => item.task.toLowerCase().includes(filter.toLowerCase())
+  const itemCompleted = (id) => {
+    const updatedList = list.map((item) =>
+      item.id === id ? { ...item, completed: !item.completed } : item
     );
-  
-    if (filterClick && filteredIndex !== -1) {
-      const updatedList = [...list];
-      updatedList[filteredIndex + index].completed = !updatedList[filteredIndex + index].completed;
-      setList(updatedList);
-  
-      // Update localStorage
-      localStorage.setItem("todoList", JSON.stringify(updatedList));
-    } else if (!filterClick) {
-      const updatedList = [...list];
-      updatedList[index].completed = !updatedList[index].completed;
-      setList(updatedList);
-  
-      // Update localStorage
-      localStorage.setItem("todoList", JSON.stringify(updatedList));
-    }
+    setList(updatedList);
+
+    // Update localStorage
+    localStorage.setItem("todoList", JSON.stringify(updatedList));
   };
-  
-  const removeItem = (todoIndex) => {
-    const filteredIndex = list.findIndex(
-      (item) => item.task.toLowerCase().includes(filter.toLowerCase())
-    );
-  
-    if (filterClick && filteredIndex !== -1) {
-      const updatedList = [...list];
-      updatedList.splice(filteredIndex + todoIndex, 1);
-      setList(updatedList);
-  
-      // Update localStorage
-      localStorage.setItem("todoList", JSON.stringify(updatedList));
-    } else if (!filterClick) {
-      const updatedList = list.filter((_, idx) => idx !== todoIndex);
-      setList(updatedList);
-  
-      // Update localStorage
-      localStorage.setItem("todoList", JSON.stringify(updatedList));
+
+  const removeItem = (id) => {
+    const updatedList = list.filter((item) => item.id !== id);
+    setList(updatedList);
+
+    // Update localStorage
+    localStorage.setItem("todoList", JSON.stringify(updatedList));
+  };
+
+  const onHandleFilter = () => {
+    setFilterClick(!filterClick);
+
+    if (filterClick === true) {
+      setFilterSearch("");
     }
   };
 
   const handleFilterChange = (e) => {
-    setFilter(e.target.value);
+    setFilterSearch(e.target.value);
   };
 
   const filteredList = list.filter((item) =>
-    item.task.toLowerCase().includes(filter.toLowerCase())
+    item.task.toLowerCase().includes(filterSearch.toLowerCase())
   );
 
   const getUnfinishedTaskCount = () => {
     return list.filter((item) => !item.completed).length;
   };
 
-
-
   return (
-    <div className="flex justify-center lg:justify-center ">
-      <div className=" flex flex-col lg:pt-14 sm:h-screen sm:w-screen px-4 py-5 space-y-2 relative overflow-hidden md:w-4/5 ">
+    <div className="flex justify-center lg:justify-center">
+      <div className="flex flex-col lg:pt-14 w-screen h-screen sm:h-screen sm:w-screen pt-4 px-1 space-y-2 relative overflow-hidden md:w-4/5">
         <Header
           getUnfinishedTaskCount={getUnfinishedTaskCount}
           list={list}
@@ -170,7 +141,6 @@ function TodoList() {
         />
 
         <div className="flex flex-col height myElement">
-          
           <div className="space-y-2 flex flex-col">
             <div className="border-solid bg-slate-300 h-44 border space-y-4">
               <TodoItem
@@ -179,7 +149,7 @@ function TodoList() {
                 setTodo={setTodo}
                 submitClicked={submitClicked}
                 filterClick={filterClick}
-                filter={filter}
+                filterSearch={filterSearch}
                 handleFilterChange={handleFilterChange}
               />
 

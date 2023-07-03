@@ -9,7 +9,7 @@ const TodoItem = ({
   setTodo,
   submitClicked,
   filterClick,
-  filter,
+  filterSearch,
   handleFilterChange
 }) => {
   return (
@@ -18,7 +18,7 @@ const TodoItem = ({
         <div className="p-2 flex flex-col space-y-2">
           <input
             type="text"
-            value={filter}
+            value={filterSearch}
             placeholder="Search Task"
             onChange={handleFilterChange}
             className="py-2 px-2 border-solid border-2 rounded-md font-semibold text-gray-900 text-lg h-11 border-stone-400"

@@ -35,7 +35,7 @@ const Header = ({ getUnfinishedTaskCount, list, onHandleFilter, filterClick }) =
 
 
 
-      <div className="font-inter font-extrabold text-2xl text-white md:text-4xl">To Do List App</div>
+      <div className="font-inter font-extrabold text-3xl text-white md:text-4xl">To Do List App</div>
 
     <div className="flex">
       {list.length > 0 ? (
