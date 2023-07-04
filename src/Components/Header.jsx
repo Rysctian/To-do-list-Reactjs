@@ -47,12 +47,12 @@ const Header = ({ getUnfinishedTaskCount, list, onHandleFilter, filterClick }) =
       )}
 
       <button onClick={onHandleFilter} className="h-6 w-8 text-sm font-inter rounded-md">
-        {filterClick === true ? (
-          <FontAwesomeIcon icon={faSearch}  color="#F55454" />
-        ) : (
-          <FontAwesomeIcon icon={faSearch} color="#00FFFF" />
-        )}
-      </button>
+          {filterClick === true ? (
+            <FontAwesomeIcon icon={faSearch} color="#F55454" />
+          ) : (
+            <FontAwesomeIcon icon={faSearch} color="#00FFFF" />
+          )}
+        </button>
     </div>
     </div>
   );

@@ -18,7 +18,7 @@ body {
 }
 
 .height{
-  height: 30rem;
+  height: 32.3rem;
 }
 
 .border{
@@ -52,4 +52,7 @@ body {
 
 .item-width{
   width: 7.5rem;
+  font-size: 1.240rem;
+  line-height: 1.8rem ;
+  font-weight: 800;
 }

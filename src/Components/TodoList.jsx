@@ -22,6 +22,8 @@ function TodoList() {
   const [filterClick, setFilterClick] = useState(false);
   const [filterSearch, setFilterSearch] = useState("");
 
+
+  // initialize data
   useEffect(() => {
     const storedList = localStorage.getItem("todoList");
     if (storedList) {
@@ -29,10 +31,13 @@ function TodoList() {
     }
   }, []);
 
+  // initialize the data if there is a new list
   useEffect(() => {
     localStorage.setItem("todoList", JSON.stringify(list));
   }, [list]);
 
+
+  // function to add a todo item
   const addTask = (e) => {
     e.preventDefault();
 
@@ -93,16 +98,18 @@ function TodoList() {
     }, 1500);
   };
 
+
+ // function to check/uncheck the todo item
   const itemCompleted = (id) => {
     const updatedList = list.map((item) =>
       item.id === id ? { ...item, completed: !item.completed } : item
     );
     setList(updatedList);
-
     // Update localStorage
     localStorage.setItem("todoList", JSON.stringify(updatedList));
   };
-
+  
+  // function to remove todo item
   const removeItem = (id) => {
     const updatedList = list.filter((item) => item.id !== id);
     setList(updatedList);
@@ -111,6 +118,7 @@ function TodoList() {
     localStorage.setItem("todoList", JSON.stringify(updatedList));
   };
 
+  // function if filter gets unclick.
   const onHandleFilter = () => {
     setFilterClick(!filterClick);
 
@@ -119,21 +127,24 @@ function TodoList() {
     }
   };
 
+  // function for search bar inputs.
   const handleFilterChange = (e) => {
     setFilterSearch(e.target.value);
   };
 
+  // function for todo item that is being search.
   const filteredList = list.filter((item) =>
     item.task.toLowerCase().includes(filterSearch.toLowerCase())
   );
 
+  // function on how many tasks were left and not complete/
   const getUnfinishedTaskCount = () => {
     return list.filter((item) => !item.completed).length;
   };
 
   return (
-    <div className="flex justify-center lg:justify-center">
-      <div className="flex flex-col lg:pt-14 w-screen h-screen sm:h-screen sm:w-screen pt-4 px-1 space-y-2 relative overflow-hidden md:w-4/5">
+    <div className="flex  justify-center lg:justify-center">
+      <div className="flex flex-col lg:pt-14 w-screen h-screen  pt-4 px-1 space-y-2 relative overflow-hidden md:w-4/5">
         <Header
           getUnfinishedTaskCount={getUnfinishedTaskCount}
           list={list}
@@ -142,7 +153,7 @@ function TodoList() {
 
         <div className="flex flex-col height myElement">
           <div className="space-y-2 flex flex-col">
-            <div className="border-solid bg-slate-300 h-44 border space-y-4">
+            <div className="  border-solid bg-slate-300 h-44 border space-y-4">
               <TodoItem
                 addTask={addTask}
                 todo={todo}
@@ -156,7 +167,7 @@ function TodoList() {
               <DateTimePicker setSelectedTime={setSelectedTime} />
             </div>
           </div>
-          <div className="max-h-fit overflow-y-auto p-3">
+          <div className="max-h-fit overflow-y-auto p-3 ">
             <Todotask
               filteredList={filteredList}
               itemCompleted={itemCompleted}

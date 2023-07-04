@@ -5,7 +5,7 @@ import { Checkbox } from "@material-tailwind/react";
 
 const Todotask = ({ filteredList, itemCompleted, removeItem }) => {
   return (
-    <div className="todo-item-list space-y-4">
+    <div className="todo-item-list space-y-4 ">
       {filteredList.map((item) => (
         <div className="list" key={item.id}>
           <div className={item.completed ? "line-through" : ""}>
@@ -18,7 +18,7 @@ const Todotask = ({ filteredList, itemCompleted, removeItem }) => {
                 checked={item.completed}
                 onChange={() => itemCompleted(item.id)}
               />
-              <span className={`font-inter capitalize item-width overflow-x-auto items-center font-bold  lg:text-3xl lg:font-extrabold lg:w-fit ${item.completed ? 'text-red-600' : 'text-black'}`}>
+              <span className={`font-inter capitalize item-width overflow-x-auto items-center  lg:text-3xl lg:font-extrabold lg:w-fit ${item.completed ? 'text-red-600' : 'text-black'}`}>
                 {item.task}
               </span>
               {item.date && <span className="absolute right-32 font-inter smSize p-1  text-gray-500 lg:text-2xl lg:right-48"> {item.date}</span>}
